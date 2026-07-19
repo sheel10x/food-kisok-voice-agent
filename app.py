@@ -15,15 +15,13 @@ import logging
 import uvicorn
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 
 # Load environment variables locally (won't affect cloud environments)
 try:
     from dotenv import load_dotenv
     load_dotenv()
-except ImportError:
     pass
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import JSONResponse
 from moshi_engine import DuplexEngine
 from menu_data import MENU_ITEMS, MENU_CATEGORIES
 
@@ -51,15 +49,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
-
 # ── Routes ────────────────────────────────────────────────────────────
-@app.get("/")
-async def index():
-    return FileResponse("static/index.html")
-
-
 @app.get("/health")
 async def health():
     return JSONResponse({
