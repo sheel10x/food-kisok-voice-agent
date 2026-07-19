@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hedes — Full-Duplex Voice AI</title>
+    <meta name="description" content="Real-time full-duplex spoken dialogue AI with inner monologue and interruption detection. Created by sheel.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div id="app">
+
+        <!-- ══ HEADER ══════════════════════════════════════════════════════════════ -->
+        <header id="header">
+            <div class="footer">
+                <div class="footer-pills">
+                    <span class="fpill">💻 Created by sheel</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="conn-group">
+                    <div id="conn-dot" class="conn-dot offline"></div>
+                    <span id="conn-label">Offline</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ══ MAIN GRID ═══════════════════════════════════════════════════════════ -->
+        <main id="main">
+
+
+
+            <!-- CENTER PANEL: Visualization & Controls -->
+            <section class="center">
+                
+                <div class="waveform-row">
+                    <!-- User stream -->
+                    <div class="waveform-side">
+                        <div class="wf-label user-color">
+                            <div class="wf-dot user-dot"></div>
+                            USER
+                        </div>
+                        <div class="canvas-wrap">
+                            <canvas id="user-canvas"></canvas>
+                        </div>
+                        <div class="level-track"><div class="level-fill user-fill" id="user-level"></div></div>
+                        <div class="vad-status" id="vad-status"></div>
+                    </div>
+
+                    <!-- Duplex Ring -->
+                    <div class="duplex-center">
+                        <div class="duplex-ring" id="duplex-ring">
+                            <div class="duplex-inner">
+                                <div class="duplex-arrow">⟲</div>
+                            </div>
+                        </div>
+                        <div class="duplex-label">FULL<br>DUPLEX</div>
+                    </div>
+
+                    <!-- Model stream -->
+                    <div class="waveform-side">
+                        <div class="wf-label model-color">
+                            <div class="wf-dot model-dot"></div>
+                            HEDES
+                        </div>
+                        <div class="canvas-wrap">
+                            <canvas id="model-canvas"></canvas>
+                        </div>
+                        <div class="level-track"><div class="level-fill model-fill" id="model-level"></div></div>
+                        <div class="vad-status" id="model-latency"></div>
+                    </div>
+                </div>
+
+                <div class="state-display">
+                    <div class="state-icon-wrap">
+                        <div class="state-icon" id="state-icon">🎙️</div>
+                    </div>
+                    <div class="state-label" id="state-label">Ready</div>
+                    <div class="state-msg" id="state-msg">Click Connect to start a conversation</div>
+                </div>
+
+
+
+                <div class="controls-row">
+                    <button id="connect-btn" class="btn btn-primary" onclick="toggleConnection()">
+                        <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="22"></line>
+                        </svg>
+                        <span id="connect-label">Connect</span>
+                    </button>
+                    <button id="interrupt-btn" class="btn btn-interrupt" onclick="sendInterrupt()" disabled title="Force interrupt Hedes's current generation">
+                        <svg class="btn-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                        </svg>
+                        Interrupt
+                    </button>
+                </div>
+
+                <div class="slider-row" title="Adjust Voice Activity Detection sensitivity. Higher = requires louder speech to interrupt.">
+                    <span class="slider-label">Mic Sens.</span>
+                    <input type="range" id="vad-slider" class="slider" min="1" max="10" value="5" oninput="onVADChange(this.value)">
+                    <span class="slider-val" id="vad-val">5</span>
+                </div>
+
+            </section>
+
+            <!-- RIGHT PANEL: Transcript -->
+            <aside class="panel panel-right">
+                <div class="panel-top">
+                    <div class="panel-title-row">
+                        <span class="panel-icon">📝</span>
+                        <h2 class="panel-title">Conversation</h2>
+                        <button class="clear-btn" onclick="clearTranscript()" title="Clear transcript">✕</button>
+                    </div>
+                    <p class="panel-desc">
+                        Real-time transcript of both<br>audio streams simultaneously.
+                    </p>
+                </div>
+
+                <div class="transcript-scroll" id="transcript">
+                    <div class="transcript-empty" id="transcript-empty">
+                        <div class="transcript-empty-icon">💬</div>
+                        <div>Conversation will appear here.<br>Both speakers shown in parallel.</div>
+                    </div>
+                </div>
+            </aside>
+
+        </main>
+
+
+
+    </div><!-- /#app -->
+
+    <script src="/static/app.js?v=5"></script>
+</body>
+</html>

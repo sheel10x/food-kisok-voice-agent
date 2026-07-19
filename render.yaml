@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: moshi-backend
+    env: python
+    rootDir: Moshi
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+
+  - type: web
+    name: moshi-frontend
+    env: node
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_BACKEND_HOST
+        fromService:
+          type: web
+          name: moshi-backend
+          envVarKey: RENDER_EXTERNAL_HOSTNAME
+      - key: NODE_VERSION
+        value: 18.17.0
