@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: moshi-backend
+    name: moshi-api
     env: python
     plan: free
     rootDir: Moshi
@@ -15,7 +15,7 @@ services:
         sync: false
 
   - type: web
-    name: moshi-frontend
+    name: moshi-web
     env: node
     plan: free
     rootDir: frontend
@@ -25,7 +25,7 @@ services:
       - key: NEXT_PUBLIC_BACKEND_HOST
         fromService:
           type: web
-          name: moshi-backend
+          name: moshi-api
           envVarKey: RENDER_EXTERNAL_HOSTNAME
       - key: NODE_VERSION
         value: 18.17.0
