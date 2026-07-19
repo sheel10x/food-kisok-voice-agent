@@ -20,6 +20,7 @@ from fastapi.middleware.cors import CORSMiddleware
 try:
     from dotenv import load_dotenv
     load_dotenv()
+except ImportError:
     pass
 from fastapi.responses import JSONResponse
 from moshi_engine import DuplexEngine
