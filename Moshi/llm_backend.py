@@ -474,11 +474,11 @@ def _smart_fallback(user_text: str) -> str:
 
     # ── Common greetings ─────────────────────────────────────────────
     if any(w in text for w in ["hello", "hi ", "hey", "good morning", "good evening"]):
-        return ("Hello! I'm Moshi, your full-duplex voice AI. I'm ready to help you with "
-                "questions, spelling, math, facts, or just a chat. What would you like to know?")
-
-    if "how are you" in text:
-        return ("I'm doing great, thank you! I'm Moshi, your AI assistant. "
+        return ("Hello! I'm Hedes, your full-duplex voice AI. I'm ready to help you with "
+                "your fast-food order today. What can I get for you?")
+    
+    if any(w in text_lower for w in ["how are you", "how are you doing"]):
+        return ("I'm doing great, thank you! I'm Hedes, your AI assistant. "
                 "I'm here to help — what would you like to know?")
 
     # ── Social questions ─────────────────────────────────────────────

@@ -291,7 +291,7 @@ class DuplexEngine:
         """Main full-duplex processing loop."""
         await self._emit("status", {
             "state": "LISTENING",
-            "message": "Moshi is ready. Start speaking!",
+            "message": "Hedes is ready. Start speaking!",
             "mode": "simulation",
         })
         self.state = "LISTENING"
