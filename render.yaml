@@ -28,4 +28,4 @@ services:
           name: moshi-api
           envVarKey: RENDER_EXTERNAL_HOSTNAME
       - key: NODE_VERSION
-        value: 18.17.0
+        value: 20.15.1
